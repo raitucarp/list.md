@@ -31,7 +31,7 @@ func flattenJSONToNode(nodeCollections [][]*Node) (flatNodes []*Node) {
 // MarshalJSON returns list markdown bytes from JSON v.
 func MarshalJSON(v []byte) (data []byte, err error) {
 	var list ListMd
-	err = json.Unmarshal(v, list)
+	err = json.Unmarshal(v, &list)
 	if err != nil {
 		return
 	}
