@@ -30,16 +30,14 @@ func TestUnmarshalAndMarshal(t *testing.T) {
 	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
 
 	var meta Metadata
-	lists, err := Unmarshal(content, &meta)
+	lists, err := Unmarshal(content, meta)
 	if err != nil {
 		t.Error(err)
 	}
 
-	json.Marshal()
-
-	_, err = json.MarshalIndent(lists, " ", " ")
-	if err != nil {
-		t.Error(err)
+	_, jsonMarshalErr := json.MarshalIndent(lists, " ", " ")
+	if jsonMarshalErr != nil {
+		t.Error(jsonMarshalErr)
 	}
 
 	data, err := Marshal(lists)
@@ -47,7 +45,6 @@ func TestUnmarshalAndMarshal(t *testing.T) {
 		t.Error(err)
 	}
 
-	// log.Println(string(data))
 	if diff := cmp.Diff(content, data); diff != "" {
 		t.Errorf("mismatch (-want +got):\n%s", diff)
 	}
