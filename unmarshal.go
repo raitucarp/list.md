@@ -126,7 +126,7 @@ func Unmarshal(data []byte, metaType any) (lists ListMd, err error) {
 	listTree := buildTree(listsRaw)
 
 	lists.Lists = listTree
-	err = yaml.Unmarshal([]byte(metaContent), &metaType)
+	err = yaml.Unmarshal([]byte(metaContent), metaType)
 	if err != nil {
 		return
 	}

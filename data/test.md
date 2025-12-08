@@ -1,16 +1,16 @@
 ---
 layout: vertical
 props:
-- css: |
+- uid: item_0_1_1
+  label: Custom Label
+  description: This is actually custom label
+  css: |
     .item {
       etawer
     }
-  description: This is actually custom label
-  label: Custom Label
-  uid: item_0_1_1
-- description: well description
+- uid: item_0_1
   label: well
-  uid: item_0_1
+  description: well description
 ---
 - test
 - this is test

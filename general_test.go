@@ -30,7 +30,7 @@ func TestUnmarshalAndMarshal(t *testing.T) {
 	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
 
 	var meta Metadata
-	lists, err := Unmarshal(content, meta)
+	lists, err := Unmarshal(content, &meta)
 	if err != nil {
 		t.Error(err)
 	}
