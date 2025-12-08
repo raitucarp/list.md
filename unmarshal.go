@@ -40,6 +40,7 @@ func Unmarshal(data []byte, metaType any) (lists ListMd, err error) {
 
 	for scanner.Scan() {
 		line := scanner.Text()
+		line = strings.ReplaceAll(line, "&nbsp;", " ")
 		line = strings.ReplaceAll(line, "\t", strings.Repeat(" ", spaceIndentLength))
 		if line == breakString && !metaMode && meta == nil {
 			metaMode = true
@@ -63,6 +64,9 @@ func Unmarshal(data []byte, metaType any) (lists ListMd, err error) {
 		}
 
 		lineTrimmed := strings.TrimSpace(line)
+		if strings.HasPrefix("\\-", line) {
+			lineTrimmed = strings.ReplaceAll(lineTrimmed, "\\-", "-")
+		}
 
 		if strings.HasPrefix(lineTrimmed, bulletPrefix) {
 			level := countLevel(line)
@@ -110,8 +114,10 @@ func Unmarshal(data []byte, metaType any) (lists ListMd, err error) {
 		} else {
 			raw = strings.TrimSpace(line)
 		}
-		listsRaw[len(listsRaw)-1].rawContents = append(listsRaw[len(listsRaw)-1].rawContents, raw)
 
+		if len(listsRaw) > 0 {
+			listsRaw[len(listsRaw)-1].rawContents = append(listsRaw[len(listsRaw)-1].rawContents, raw)
+		}
 	}
 
 	if errScan := scanner.Err(); errScan != nil {
